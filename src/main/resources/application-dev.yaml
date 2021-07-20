@@ -3,6 +3,6 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: "jdbc:postgresql://localhost:5432/home"
+    url: jdbc:postgresql://localhost:5432/home
     username: ${DB_USER}
     password: ${DB_PASSWORD}

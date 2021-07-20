@@ -14,12 +14,19 @@ public class IngredientService {
         this.ingredientRepository = ingredientRepository;
     }
 
-    @Transactional
-    public IngredientEntity createIngredient(IngredientEntity ingredientEntity) {
+    public IngredientEntity saveIngredient(IngredientEntity ingredientEntity) {
         return ingredientRepository.save(ingredientEntity);
     }
 
     public List<IngredientEntity> getAllIngredients() {
         return ingredientRepository.findAll();
+    }
+
+    public IngredientEntity getIngredientById(Long ingredientId) {
+        return ingredientRepository.getById(ingredientId);
+    }
+
+    public void deleteIngredient(IngredientEntity ingredientEntity) {
+        ingredientRepository.delete(ingredientEntity);
     }
 }
