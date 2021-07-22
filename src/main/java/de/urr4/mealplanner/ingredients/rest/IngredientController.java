@@ -2,7 +2,6 @@ package de.urr4.mealplanner.ingredients.rest;
 
 import de.urr4.mealplanner.ingredients.IngredientEntity;
 import de.urr4.mealplanner.ingredients.IngredientService;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -24,11 +23,17 @@ public class IngredientController {
 
     @Operation(summary = "Returns all Ingredients")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<IngredientDTO> getIngredients() {
+    public List<IngredientDTO> getAllIngredients() {
         return ingredientService.getAllIngredients()
                 .stream()
                 .map(IngredientDTO::from)
                 .collect(Collectors.toList());
+    }
+
+    @Operation(summary = "Returns Ingredient by id")
+    @GetMapping(path = "/{ingredientId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public IngredientDTO getIngredientById(@PathVariable("ingredientId") Long ingedientId) {
+        return IngredientDTO.from(ingredientService.getIngredientById(ingedientId));
     }
 
     @Transactional
@@ -51,9 +56,9 @@ public class IngredientController {
 
     @Transactional
     @Operation(summary = "Updates an Ingredient")
-    @PutMapping(path = "/{ingredientId}")
-    public IngredientDTO updateIngredient(@PathVariable("ingredientId") Long ingredientId, @RequestBody @Valid UpdateIngredientRequest updateIngredientRequest) {
-        IngredientEntity ingredientEntity = ingredientService.getIngredientById(ingredientId);
+    @PutMapping
+    public IngredientDTO updateIngredient(@RequestBody @Valid UpdateIngredientRequest updateIngredientRequest) {
+        IngredientEntity ingredientEntity = ingredientService.getIngredientById(updateIngredientRequest.getId());
         ingredientEntity.setName(updateIngredientRequest.getName());
         return IngredientDTO.from(ingredientService.saveIngredient(ingredientEntity));
     }

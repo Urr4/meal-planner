@@ -2,7 +2,6 @@ package de.urr4.mealplanner.ingredients;
 
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
