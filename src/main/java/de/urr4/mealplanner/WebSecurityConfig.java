@@ -13,6 +13,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${spring.ldap.password}")
     private String ldapPassword;
 
+    @Value("${spring.ldap.url}")
+    private String ldapUrl = "ldap://localhost:389/dc=urr4,dc=com";
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -31,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .contextSource()
                 .managerDn("cn=admin,dc=urr4,dc=com")
                 .managerPassword(ldapPassword)
-                .url("ldap://localhost:389/dc=urr4,dc=com")
+                .url(ldapUrl)
                 .and()
                 .passwordCompare()
                 .passwordEncoder(new BCryptPasswordEncoder())

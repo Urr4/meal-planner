@@ -2,13 +2,17 @@ package de.urr4.mealplanner.recipe.rest;
 
 import de.urr4.mealplanner.recipe.RecipeEntity;
 import de.urr4.mealplanner.recipe.RecipeService;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Log4j2
 @RestController
 @RequestMapping(path = "/recipes")
 public class RecipeController {
@@ -21,6 +25,7 @@ public class RecipeController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<RecipeDTO> getAllRecipes() {
+        log.info("Loading all Recipes");
         return recipeService.getAllRecipes()
                 .stream()
                 .map(RecipeDTO::from)
@@ -29,12 +34,14 @@ public class RecipeController {
 
     @GetMapping(path = "/{recipeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public RecipeDTO getRecipeById(@PathVariable("recipeId") Long recipeId) {
+        log.info("Loading Recipe by id " + recipeId);
         return RecipeDTO.from(recipeService.getRecipeById(recipeId));
     }
 
     @Transactional
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public RecipeDTO createRecipe(@RequestBody CreateRecipeRequest createRecipeRequest) {
+    public RecipeDTO createRecipe(@RequestBody @Valid CreateRecipeRequest createRecipeRequest) {
+        log.info("Creating Recipe " + createRecipeRequest);
         RecipeEntity recipeEntity = new RecipeEntity();
         recipeEntity.setName(createRecipeRequest.getName());
         return RecipeDTO.from(recipeService.saveRecipe(recipeEntity));
@@ -42,7 +49,8 @@ public class RecipeController {
 
     @Transactional
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public RecipeDTO updateRecipe(@RequestBody UpdateRecipeRequest updateRecipeRequest) {
+    public RecipeDTO updateRecipe(@RequestBody @Valid UpdateRecipeRequest updateRecipeRequest) {
+        log.info("Updating Recipe " + updateRecipeRequest);
         RecipeEntity recipeEntity = recipeService.getRecipeById(updateRecipeRequest.getId());
         recipeEntity.setName(updateRecipeRequest.getName());
         return RecipeDTO.from(recipeService.saveRecipe(recipeEntity));

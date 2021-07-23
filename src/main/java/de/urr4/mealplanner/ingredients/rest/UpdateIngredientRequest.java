@@ -1,12 +1,14 @@
 package de.urr4.mealplanner.ingredients.rest;
 
 import lombok.Getter;
+import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter
+@ToString
 public class UpdateIngredientRequest {
 
     @NotNull(message = "Cannot update without an id")

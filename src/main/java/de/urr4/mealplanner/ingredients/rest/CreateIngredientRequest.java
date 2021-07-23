@@ -1,11 +1,13 @@
 package de.urr4.mealplanner.ingredients.rest;
 
 import lombok.Getter;
+import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Getter
+@ToString
 public class CreateIngredientRequest {
 
     @NotBlank(message = "Cannot create ingredients without name")

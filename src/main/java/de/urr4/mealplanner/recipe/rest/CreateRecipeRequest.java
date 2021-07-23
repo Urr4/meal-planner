@@ -1,11 +1,13 @@
 package de.urr4.mealplanner.recipe.rest;
 
 import lombok.Getter;
+import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Getter
+@ToString
 public class CreateRecipeRequest {
 
     @NotBlank(message = "Name has to be provided")
