@@ -17,5 +17,8 @@ public class UpdateRecipeRequest {
     @NotBlank(message = "Name has to be provided")
     @Size(min = 1, max = 100, message = "Has to be between 1 and 100 characters long")
     private String name;
+
+    @Size(max = 1000, message = "Must to be at most 1000 characters long")
+    private String description;
 }
 

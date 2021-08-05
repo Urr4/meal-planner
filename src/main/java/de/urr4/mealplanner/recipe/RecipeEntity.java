@@ -16,6 +16,7 @@ public class RecipeEntity {
     private Long id;
 
     private String name;
+    private String description;
 
     @OneToMany
     private List<IngredientDescriptorEntity> ingredientDescriptorEntities = new ArrayList<>();

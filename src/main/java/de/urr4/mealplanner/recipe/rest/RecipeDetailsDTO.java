@@ -10,20 +10,23 @@ import java.util.stream.Collectors;
 
 @Getter
 @Builder(access = AccessLevel.PRIVATE)
-public class RecipeDTO {
+public class RecipeDetailsDTO {
 
     private Long id;
     private String name;
+    private String description;
     private List<IngredientDescriptorDTO> ingredientDescriptors;
 
-    public static RecipeDTO from(RecipeEntity recipeEntity) {
-        return RecipeDTO.builder()
+    public static RecipeDetailsDTO from(RecipeEntity recipeEntity) {
+        return RecipeDetailsDTO.builder()
                 .id(recipeEntity.getId())
                 .name(recipeEntity.getName())
+                .description(recipeEntity.getDescription())
                 .ingredientDescriptors(recipeEntity.getIngredientDescriptorEntities()
                         .stream()
                         .map(IngredientDescriptorDTO::from)
-                        .collect(Collectors.toList()))
+                        .collect(Collectors.toList())
+                )
                 .build();
 
     }

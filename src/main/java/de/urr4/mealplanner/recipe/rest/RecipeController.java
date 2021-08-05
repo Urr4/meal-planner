@@ -3,7 +3,6 @@ package de.urr4.mealplanner.recipe.rest;
 import de.urr4.mealplanner.recipe.RecipeEntity;
 import de.urr4.mealplanner.recipe.RecipeService;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +13,7 @@ import java.util.stream.Collectors;
 
 @Log4j2
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "/recipes")
 public class RecipeController {
 
@@ -24,36 +24,38 @@ public class RecipeController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<RecipeDTO> getAllRecipes() {
+    public List<RecipePreviewDTO> getAllRecipes() {
         log.info("Loading all Recipes");
         return recipeService.getAllRecipes()
                 .stream()
-                .map(RecipeDTO::from)
+                .map(RecipePreviewDTO::from)
                 .collect(Collectors.toList());
     }
 
     @GetMapping(path = "/{recipeId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public RecipeDTO getRecipeById(@PathVariable("recipeId") Long recipeId) {
+    public RecipeDetailsDTO getRecipeDetailsById(@PathVariable("recipeId") Long recipeId) {
         log.info("Loading Recipe by id " + recipeId);
-        return RecipeDTO.from(recipeService.getRecipeById(recipeId));
+        return RecipeDetailsDTO.from(recipeService.getRecipeById(recipeId));
     }
 
     @Transactional
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public RecipeDTO createRecipe(@RequestBody @Valid CreateRecipeRequest createRecipeRequest) {
+    public RecipePreviewDTO createRecipe(@RequestBody @Valid CreateRecipeRequest createRecipeRequest) {
         log.info("Creating Recipe " + createRecipeRequest);
         RecipeEntity recipeEntity = new RecipeEntity();
         recipeEntity.setName(createRecipeRequest.getName());
-        return RecipeDTO.from(recipeService.saveRecipe(recipeEntity));
+        recipeEntity.setDescription(createRecipeRequest.getDescription());
+        return RecipePreviewDTO.from(recipeService.saveRecipe(recipeEntity));
     }
 
     @Transactional
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public RecipeDTO updateRecipe(@RequestBody @Valid UpdateRecipeRequest updateRecipeRequest) {
+    public RecipePreviewDTO updateRecipe(@RequestBody @Valid UpdateRecipeRequest updateRecipeRequest) {
         log.info("Updating Recipe " + updateRecipeRequest);
         RecipeEntity recipeEntity = recipeService.getRecipeById(updateRecipeRequest.getId());
         recipeEntity.setName(updateRecipeRequest.getName());
-        return RecipeDTO.from(recipeService.saveRecipe(recipeEntity));
+        recipeEntity.setDescription(updateRecipeRequest.getDescription());
+        return RecipePreviewDTO.from(recipeService.saveRecipe(recipeEntity));
     }
 
     @Transactional
