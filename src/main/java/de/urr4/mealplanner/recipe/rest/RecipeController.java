@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Log4j2
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin
 @RequestMapping(path = "/recipes")
 public class RecipeController {
 

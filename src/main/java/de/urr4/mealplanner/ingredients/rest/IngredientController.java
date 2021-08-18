@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 @Log4j2
 @RestController
+@CrossOrigin
 @RequestMapping(path = "/ingredients")
 public class IngredientController {
 
