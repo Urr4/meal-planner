@@ -1,5 +1,6 @@
 package de.urr4.mealplanner.recipe;
 
+import de.urr4.mealplanner.descriptor.IngredientDescriptorEntity;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,7 +19,7 @@ public class RecipeEntity {
     private String name;
     private String description;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<IngredientDescriptorEntity> ingredientDescriptorEntities = new ArrayList<>();
 
 }

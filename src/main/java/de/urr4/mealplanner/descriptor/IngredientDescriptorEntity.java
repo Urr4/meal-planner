@@ -1,6 +1,8 @@
-package de.urr4.mealplanner.recipe;
+package de.urr4.mealplanner.descriptor;
 
 import de.urr4.mealplanner.ingredients.IngredientEntity;
+import de.urr4.mealplanner.recipe.Unit;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;

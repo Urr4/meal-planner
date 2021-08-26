@@ -1,11 +1,14 @@
 package de.urr4.mealplanner.recipe.rest;
 
+import de.urr4.mealplanner.descriptor.rest.IngredientDescriptorRequest;
 import lombok.Getter;
 import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @ToString
@@ -20,5 +23,7 @@ public class UpdateRecipeRequest {
 
     @Size(max = 1000, message = "Must to be at most 1000 characters long")
     private String description;
+
+    private List<IngredientDescriptorRequest> ingredientDescriptorRequests = new ArrayList<>();
 }
 

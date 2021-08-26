@@ -1,7 +1,7 @@
-package de.urr4.mealplanner.recipe.rest;
+package de.urr4.mealplanner.descriptor.rest;
 
+import de.urr4.mealplanner.descriptor.IngredientDescriptorEntity;
 import de.urr4.mealplanner.ingredients.rest.IngredientDTO;
-import de.urr4.mealplanner.recipe.IngredientDescriptorEntity;
 import de.urr4.mealplanner.recipe.Unit;
 import lombok.AccessLevel;
 import lombok.Builder;
