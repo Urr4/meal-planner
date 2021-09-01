@@ -24,6 +24,6 @@ public class UpdateRecipeRequest {
     @Size(max = 1000, message = "Must to be at most 1000 characters long")
     private String description;
 
-    private List<IngredientDescriptorRequest> ingredientDescriptorRequests = new ArrayList<>();
+    private List<IngredientDescriptorRequest> ingredientDescriptors = new ArrayList<>();
 }
 

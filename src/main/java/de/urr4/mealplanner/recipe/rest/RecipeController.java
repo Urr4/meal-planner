@@ -59,7 +59,7 @@ public class RecipeController {
         recipeEntity.setDescription(createRecipeRequest.getDescription());
         createRecipeRequest.getCreateIngredientDescriptorRequest().forEach(
                 desc -> {
-                    IngredientEntity ingredientEntity = ingredientService.getIngredientById(desc.getIngredientId());
+                    IngredientEntity ingredientEntity = ingredientService.getIngredientById(desc.getIngredient().getId());
                     IngredientDescriptorEntity ingredientDescriptorEntity = new IngredientDescriptorEntity();
                     ingredientDescriptorEntity.setIngredientEntity(ingredientEntity);
                     ingredientDescriptorEntity.setUnit(desc.getUnit());
@@ -78,7 +78,7 @@ public class RecipeController {
         recipeEntity.setName(updateRecipeRequest.getName());
         recipeEntity.setDescription(updateRecipeRequest.getDescription());
         List<IngredientDescriptorEntity> ingredientDescriptorEntities = new ArrayList<>();
-        for (IngredientDescriptorRequest ingredientDescriptorRequest : updateRecipeRequest.getIngredientDescriptorRequests()) {
+        for (IngredientDescriptorRequest ingredientDescriptorRequest : updateRecipeRequest.getIngredientDescriptors()) {
             IngredientDescriptorEntity ingredientDescriptorEntity;
             if (ingredientDescriptorRequest instanceof CreateIngredientDescriptorRequest) {
                 ingredientDescriptorEntity = new IngredientDescriptorEntity();
@@ -88,7 +88,7 @@ public class RecipeController {
             }
             ingredientDescriptorEntity.setAmount(ingredientDescriptorRequest.getAmount());
             ingredientDescriptorEntity.setUnit(ingredientDescriptorRequest.getUnit());
-            IngredientEntity ingredientEntity = ingredientService.getIngredientById(ingredientDescriptorRequest.getIngredientId());
+            IngredientEntity ingredientEntity = ingredientService.getIngredientById(ingredientDescriptorRequest.getIngredient().getId());
             ingredientDescriptorEntity.setIngredientEntity(ingredientEntity);
             ingredientDescriptorEntities.add(ingredientDescriptorEntity);
         }

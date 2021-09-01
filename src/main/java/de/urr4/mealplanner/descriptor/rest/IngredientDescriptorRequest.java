@@ -27,7 +27,7 @@ public abstract class IngredientDescriptorRequest {
     private Double amount;
 
     @NotNull
-    private Long ingredientId;
+    private IngredientDTO ingredient;
 
     private String type;
 }
