@@ -1,8 +1,9 @@
-spring:
-  jpa:
-    hibernate:
-      ddl-auto: update
-  datasource:
-    url: jdbc:postgresql://localhost:5432/home
-  ldap:
-    url: ldap://localhost:389/dc=urr4,dc=com
+org:
+  neo4j:
+    driver:
+      uri: ${neo4j.url}
+      authentication:
+        username: ${neo4j.user}
+        password: ${neo4j.password}
+      config:
+        encrypted: true

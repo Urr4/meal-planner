@@ -1,6 +1,0 @@
-spring:
-  jpa:
-    hibernate:
-      ddl-auto: validate
-  ldap:
-    url: ldap://openldap.infrastructure:389/dc=urr4,dc=com
