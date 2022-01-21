@@ -13,4 +13,6 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build the Docker image
-        run: ./distributeDockerImages.sh ${GITHUB_SHA}
+        run: |
+          ls
+          ./distributeDockerImages.sh ${GITHUB_SHA}
