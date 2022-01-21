@@ -21,13 +21,14 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          username: 08021986
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build the Docker image
         run: |
-          docker build --platform linux/arm/v7 -t 08021986/meal-planner-fe:${GITHUB_SHA} .
+          echo ${GITHUB_SHA}
+          docker build --platform linux/arm/v7 -t 08021986/meal-planner:${GITHUB_SHA} .
 
       - name: Push the Docker image
         run: |
-          docker push 08021986/meal-planner-fe:${GITHUB_SHA}
+          docker push 08021986/meal-planner:${GITHUB_SHA}
