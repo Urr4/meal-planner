@@ -23,4 +23,8 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker build --platform linux/arm/v7 -t 08021986/meal-planner-fe:${GITHUB_SHA} . --push
+          docker build --platform linux/arm/v7 -t ${{ secrets.DOCKERHUB_USERNAME }}/meal-planner-fe:${GITHUB_SHA} .
+
+      - name: Push the Docker image
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/meal-planner-fe:${GITHUB_SHA}
