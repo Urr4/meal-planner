@@ -14,5 +14,4 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          ls
-          ./distributeDockerImages.sh ${GITHUB_SHA}
+          ./distributeDockerImage.sh ${GITHUB_SHA}
