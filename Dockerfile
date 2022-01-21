@@ -6,7 +6,7 @@ WORKDIR /application
 # Incremental docker builds will resume here when you change sources
 ADD pom.xml .
 ADD src src
-RUN mvn package -DskipTests
+RUN mvn package -q -DskipTests
 
 FROM arm32v7/openjdk:11
 ARG JAR_FILE=/application/target/*.jar
