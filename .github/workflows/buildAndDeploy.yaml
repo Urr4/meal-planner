@@ -27,8 +27,8 @@ jobs:
       - name: Build the Docker image
         run: |
           echo ${GITHUB_SHA}
-          docker build --platform linux/arm/v7 -t 08021986/meal-planner:${GITHUB_SHA} .
+          docker build --platform linux/arm/v7 -t "08021986/meal-planner:${GITHUB_SHA}" .
 
       - name: Push the Docker image
         run: |
-          docker push 08021986/meal-planner:${GITHUB_SHA}
+          docker push "08021986/meal-planner:${GITHUB_SHA}"
