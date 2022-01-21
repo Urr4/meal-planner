@@ -1,0 +1,16 @@
+name: Build and Push Docker Image CI
+
+on:
+  push:
+    branches: [ hex ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build the Docker image
+        run: ./distributeDockerImages.sh ${GITHUB_SHA}
