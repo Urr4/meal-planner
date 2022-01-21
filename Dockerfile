@@ -6,7 +6,6 @@ WORKDIR /application
 # Incremental docker builds will resume here when you change sources
 ADD pom.xml .
 ADD src src
-RUN echo "Building application"
 RUN mvn package -DskipTests
 
 FROM arm32v7/openjdk:11
@@ -15,4 +14,3 @@ COPY --from=build ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 
 EXPOSE 8080
-RUN echo "Done!"
