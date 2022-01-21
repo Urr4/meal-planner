@@ -30,4 +30,4 @@ jobs:
 
       - name: Push the Docker image
         run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/meal-planner-fe:${GITHUB_SHA}
+          docker push 08021986/meal-planner-fe:${GITHUB_SHA}
