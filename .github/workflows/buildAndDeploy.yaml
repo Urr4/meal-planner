@@ -12,6 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: docker/setup-buildx-action@v1
+        id: buildx
+        with:
+          install: true
+
       - name: Build the Docker image
         run: |
-          ./distributeDockerImage.sh ${GITHUB_SHA}
+          docker build --platform linux/arm/v7 -t 08021986/meal-planner-fe:${GITHUB_SHA} .
