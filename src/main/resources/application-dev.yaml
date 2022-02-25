@@ -1,9 +1,9 @@
 org:
   neo4j:
     driver:
-      uri: ${NEO4J_URL}
+      uri: ${neo4j.url}
       authentication:
-        username: ${NEO4J_USER}
-        password: ${NEO4J_PASSWORD}
+        username: ${neo4j.user}
+        password: ${neo4j.password}
       config:
         encrypted: true
