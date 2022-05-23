@@ -6,13 +6,15 @@ import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Property;
 
+import java.util.UUID;
+
 @Data
 @Node("Recipe")
 public class RecipeEntity {
 
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(generatorClass = GeneratedValue.UUIDGenerator.class)
+    private UUID id;
 
     @Property
     private String name;

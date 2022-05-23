@@ -5,18 +5,33 @@ import de.urr4.mealplanner.domain.recipe.RecipeRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class Neo4jRecipeRepositoryImpl implements RecipeRepository {
 
-    private final SpringDataNeo4jRepository springDataNeo4jRepository;
+    private final SpringDataNeo4jRecipeRepository springDataNeo4JRecipeRepository;
 
-    public Neo4jRecipeRepositoryImpl(SpringDataNeo4jRepository springDataNeo4jRepository) {
-        this.springDataNeo4jRepository = springDataNeo4jRepository;
+    public Neo4jRecipeRepositoryImpl(SpringDataNeo4jRecipeRepository springDataNeo4JRecipeRepository) {
+        this.springDataNeo4JRecipeRepository = springDataNeo4JRecipeRepository;
     }
 
     @Override
     public Page<Recipe> getRecipesByPage(Pageable pageable) {
-        return springDataNeo4jRepository.findAll(pageable).map(RecipeMapper::toDomain);
+        return springDataNeo4JRecipeRepository.findAll(pageable).map(RecipeMapper::toDomain);
+    }
+
+    @Override
+    public Recipe createRecipe(Recipe recipe) {
+        return RecipeMapper.toDomain(springDataNeo4JRecipeRepository.save(RecipeMapper.toEntity(recipe)));
+    }
+
+    @Override
+    public Recipe getRecipeById(UUID id) {
+        Optional<RecipeEntity> optional = springDataNeo4JRecipeRepository.findById(id);
+        return RecipeMapper.toDomain(optional.orElseThrow(() -> new NotFoundException(String.format("Could not find Recipe %s", id))));
     }
 }

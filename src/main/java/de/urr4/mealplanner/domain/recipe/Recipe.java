@@ -2,10 +2,12 @@ package de.urr4.mealplanner.domain.recipe;
 
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class Recipe {
 
-    private Long id;
+    private UUID id;
     private String name;
 
 //    private List<IngredientDescriptor> ingredientDescriptors;

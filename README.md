@@ -1,6 +1,12 @@
 # Meal-Planner Backend
 This application is designed to be a simple playground for a Spring Boot Microservice running on Kubernetes.
 
+## Swagger
+Open-api:  /api/open-api
+Swagger-UI: ,   ,
+
+
+
 ## Deployments
 All related deployment descriptors can be found in <a>https://github.com/Urr4/deployments.
 
