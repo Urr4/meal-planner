@@ -18,13 +18,13 @@ public class Neo4jIngredientRepositoryImpl implements IngredientRepository {
     @Override
     public Page<Ingredient> loadIngredientsPage(int pageNumber, int pageSize) {
         return springDataNeo4jIngredientRepository.findAll(PageRequest.of(pageNumber, pageSize))
-                .map(IngredientMapper::toDomain);
+                .map(IngredientMapper.getInstance()::toDomain);
     }
 
     @Override
     public Ingredient saveIngredient(Ingredient ingredient) {
-        IngredientEntity ingredientEntity = springDataNeo4jIngredientRepository.save(IngredientMapper.toEntity(ingredient));
-        return IngredientMapper.toDomain(ingredientEntity);
+        IngredientEntity ingredientEntity = springDataNeo4jIngredientRepository.save(IngredientMapper.getInstance().toEntity(ingredient));
+        return IngredientMapper.getInstance().toDomain(ingredientEntity);
     }
 
 }

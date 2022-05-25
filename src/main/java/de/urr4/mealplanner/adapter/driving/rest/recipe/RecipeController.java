@@ -2,6 +2,8 @@ package de.urr4.mealplanner.adapter.driving.rest.recipe;
 
 import de.urr4.mealplanner.domain.recipe.Recipe;
 import de.urr4.mealplanner.domain.recipe.RecipeService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+@Tag(name = "Recipe Endpoints", description = "Operations for dealing with recipes")
 @RestController
 @RequestMapping(path = "/recipes")
 public class RecipeController {
@@ -22,6 +25,7 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
+    @Operation(summary = "Get recipes pageable", description = "Fetches a page of recipes")
     @GetMapping
     public Page<RecipeDto> getRecipesByPage(@RequestParam(value = "page", defaultValue = "0") int pageNumber, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         LOG.info("Getting recipes for page {} with pageSize {}", pageNumber, pageSize);
@@ -37,7 +41,7 @@ public class RecipeController {
     @PutMapping
     public RecipeDto updateRecipe(@RequestBody UpdateRecipeRequest updateRecipeRequest) {
         LOG.info("Updating recipe with recipeId {}", updateRecipeRequest.getRecipeId());
-        return new RecipeDto(); //TODO implement
+        return null; //TODO implement
     }
 
     @PostMapping

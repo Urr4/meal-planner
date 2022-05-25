@@ -1,7 +1,7 @@
 package de.urr4.mealplanner.adapter.driving.neo4j.recipe;
 
 import de.urr4.mealplanner.domain.recipe.Recipe;
-import de.urr4.mealplanner.domain.recipe.RecipeRepository;
+import de.urr4.mealplanner.application.recipe.RecipeRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,17 +21,17 @@ public class Neo4jRecipeRepositoryImpl implements RecipeRepository {
 
     @Override
     public Page<Recipe> getRecipesByPage(Pageable pageable) {
-        return springDataNeo4JRecipeRepository.findAll(pageable).map(RecipeMapper::toDomain);
+        return springDataNeo4JRecipeRepository.findAll(pageable).map(RecipeMapper.getInstance()::toDomain);
     }
 
     @Override
     public Recipe createRecipe(Recipe recipe) {
-        return RecipeMapper.toDomain(springDataNeo4JRecipeRepository.save(RecipeMapper.toEntity(recipe)));
+        return RecipeMapper.getInstance().toDomain(springDataNeo4JRecipeRepository.save(RecipeMapper.getInstance().toEntity(recipe)));
     }
 
     @Override
     public Recipe getRecipeById(UUID id) {
         Optional<RecipeEntity> optional = springDataNeo4JRecipeRepository.findById(id);
-        return RecipeMapper.toDomain(optional.orElseThrow(() -> new NotFoundException(String.format("Could not find Recipe %s", id))));
+        return RecipeMapper.getInstance().toDomain(optional.orElseThrow(() -> new NotFoundException(String.format("Could not find Recipe %s", id))));
     }
 }

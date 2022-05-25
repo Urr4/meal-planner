@@ -1,4 +1,4 @@
-package de.urr4.mealplanner.adapter.driving.neo4j.ingredient;
+package de.urr4.mealplanner.adapter.driving.neo4j.tag;
 
 import lombok.Data;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
@@ -9,14 +9,13 @@ import org.springframework.data.neo4j.core.schema.Property;
 import java.util.UUID;
 
 @Data
-@Node("Ingredient")
-public class IngredientEntity {
+@Node("Tag")
+public class TagEntity {
 
     @Id
     @GeneratedValue(generatorClass = GeneratedValue.UUIDGenerator.class)
     private UUID id;
 
     @Property
-    private String name;
-
+    private String tag;
 }

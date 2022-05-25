@@ -1,17 +1,30 @@
 package de.urr4.mealplanner.adapter.driving.neo4j.ingredient;
 
+import de.urr4.mealplanner.adapter.driving.neo4j.Mapper;
 import de.urr4.mealplanner.domain.ingredient.Ingredient;
 
-public class IngredientMapper {
+public class IngredientMapper implements Mapper<Ingredient, IngredientEntity> {
 
-    public static IngredientEntity toEntity(Ingredient ingredient){
+    private static IngredientMapper instance;
+
+    public static IngredientMapper getInstance() {
+        if (instance == null) {
+            instance = new IngredientMapper();
+        }
+        return instance;
+    }
+
+    private IngredientMapper() {
+    }
+
+    public IngredientEntity toEntity(Ingredient domain) {
         IngredientEntity ingredientEntity = new IngredientEntity();
-        ingredientEntity.setId(ingredient.getId());
-        ingredientEntity.setName(ingredient.getName());
+        ingredientEntity.setId(domain.getId());
+        ingredientEntity.setName(domain.getName());
         return ingredientEntity;
     }
 
-    public static Ingredient toDomain(IngredientEntity ingredientEntity){
+    public Ingredient toDomain(IngredientEntity ingredientEntity) {
         Ingredient ingredient = new Ingredient();
         ingredient.setId(ingredientEntity.getId());
         ingredient.setName(ingredientEntity.getName());

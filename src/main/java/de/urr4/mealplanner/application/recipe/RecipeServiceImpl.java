@@ -1,7 +1,6 @@
 package de.urr4.mealplanner.application.recipe;
 
 import de.urr4.mealplanner.domain.recipe.Recipe;
-import de.urr4.mealplanner.domain.recipe.RecipeRepository;
 import de.urr4.mealplanner.domain.recipe.RecipeService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
