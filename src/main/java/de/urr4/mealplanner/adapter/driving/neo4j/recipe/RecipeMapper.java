@@ -1,7 +1,10 @@
 package de.urr4.mealplanner.adapter.driving.neo4j.recipe;
 
 import de.urr4.mealplanner.adapter.driving.neo4j.Mapper;
+import de.urr4.mealplanner.adapter.driving.neo4j.tag.TagMapper;
 import de.urr4.mealplanner.domain.recipe.Recipe;
+
+import java.util.stream.Collectors;
 
 public class RecipeMapper implements Mapper<Recipe, RecipeEntity> {
 
@@ -22,7 +25,8 @@ public class RecipeMapper implements Mapper<Recipe, RecipeEntity> {
         recipeEntity.setId(domain.getId());
         recipeEntity.setName(domain.getName());
         recipeEntity.setInstructions(domain.getInstructions());
-        //TODO IngredientDescriptor
+        recipeEntity.setIngredientDescriptors(domain.getIngredientDescriptors().stream().map(IngredientDescriptorMapper.getInstance()::toEntity).collect(Collectors.toList()));
+        recipeEntity.setTags(domain.getTags().stream().map(TagMapper.getInstance()::toEntity).collect(Collectors.toList()));
         return recipeEntity;
     }
 
@@ -31,7 +35,8 @@ public class RecipeMapper implements Mapper<Recipe, RecipeEntity> {
         recipe.setId(recipeEntity.getId());
         recipe.setName(recipeEntity.getName());
         recipe.setInstructions(recipeEntity.getInstructions());
-        //TODO IngredientDescriptor
+        recipe.setIngredientDescriptors(recipeEntity.getIngredientDescriptors().stream().map(IngredientDescriptorMapper.getInstance()::toDomain).collect(Collectors.toList()));
+        recipe.setTags(recipeEntity.getTags().stream().map(TagMapper.getInstance()::toDomain).collect(Collectors.toList()));
         return recipe;
     }
 }

@@ -1,5 +1,8 @@
 package de.urr4.mealplanner.adapter.driving.rest.recipe;
 
+import de.urr4.mealplanner.adapter.driving.rest.ingredient.IngredientMapper;
+import de.urr4.mealplanner.adapter.driving.rest.tag.TagMapper;
+import de.urr4.mealplanner.domain.recipe.IngredientDescriptor;
 import de.urr4.mealplanner.domain.recipe.Recipe;
 import de.urr4.mealplanner.domain.recipe.RecipeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Tag(name = "Recipe Endpoints", description = "Operations for dealing with recipes")
 @RestController
@@ -60,6 +64,15 @@ public class RecipeController {
         Recipe recipe = new Recipe();
         recipe.setName(createRecipeRequest.getName());
         recipe.setInstructions(createRecipeRequest.getInstructions());
+        recipe.setIngredientDescriptors(createRecipeRequest.getIngredientDescriptors().stream().map(this::mapToIngredientDescriptor).collect(Collectors.toList()));
+        recipe.setTags(createRecipeRequest.getTags().stream().map(TagMapper::toDomain).collect(Collectors.toList()));
         return recipe;
     }
+
+    private IngredientDescriptor mapToIngredientDescriptor(CreateIngredientDescriptorRequest ingredientDescriptorRequest) {
+        IngredientDescriptor ingredientDescriptor = new IngredientDescriptor();
+        ingredientDescriptor.setIngredient(IngredientMapper.toDomain(ingredientDescriptorRequest.getIngredient()));
+        return ingredientDescriptor;
+    }
+
 }
