@@ -1,10 +1,15 @@
 package de.urr4.mealplanner.adapter.driving.rest.meals;
 
+import de.urr4.mealplanner.domain.meal.Meal;
+import de.urr4.mealplanner.domain.meal.MealService;
+import org.apache.commons.lang3.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/meals")
@@ -12,33 +17,45 @@ public class MealController {
 
     private final Logger LOG = LoggerFactory.getLogger(MealController.class);
 
+    private final MealService mealService;
+
+    public MealController(MealService mealService) {
+        this.mealService = mealService;
+    }
+
     @GetMapping
-    public MealPlanDto getRandomMealPlan(@RequestParam(value = "numberOfMeals", defaultValue = "0") int numberOfMeals) {
+    public Collection<MealDto> getRandomMeals(@RequestParam(value = "numberOfMeals", defaultValue = "0") int numberOfMeals) {
         LOG.info("Getting random meal-plan with {} meals", numberOfMeals);
-        return new MealPlanDto(); //TODO implement
+        return mealService.getRandomMeals(numberOfMeals).stream().map(MealMapper::toDto).collect(Collectors.toList());
     }
 
     @GetMapping(path = "/{mealId}")
     public MealDto getMeal(@PathVariable("mealId") UUID mealId) {
         LOG.info("Getting meal {}", mealId);
-        return new MealDto(); //TODO implement
+        return MealMapper.toDto(mealService.getMealById(mealId));
     }
 
     @PostMapping
     public MealDto createMeal(@RequestBody CreateMealRequest createMealRequest) {
         LOG.info("Creating meal for mealId {}", createMealRequest.getMealName());
-        return new MealDto(); //TODO implement
+        return MealMapper.toDto(mealService.createMeal(mapToMeal(createMealRequest)));
     }
 
     @PutMapping
     public void favoriteMeal(@RequestBody FavoriteMealRequest favoriteMealRequest) {
         LOG.info("User {} favorited meal with mealId {}", favoriteMealRequest.getUserId(), favoriteMealRequest.getMealId());
-        //TODO implement
+        throw new NotImplementedException(); //TODO implement
     }
 
     @DeleteMapping(path = "/{mealId}")
     public void deleteMeal(@RequestParam("mealId") UUID mealId) {
         LOG.info("Marking meal with mealId {} as deleted", mealId);
-        //TODO implement
+        throw new NotImplementedException(); //TODO implement
+    }
+
+    private Meal mapToMeal(CreateMealRequest createMealRequest) {
+        Meal meal = new Meal();
+        meal.setName(createMealRequest.getMealName());
+        return meal;
     }
 }

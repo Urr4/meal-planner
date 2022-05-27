@@ -7,6 +7,7 @@ import de.urr4.mealplanner.domain.recipe.Recipe;
 import de.urr4.mealplanner.domain.recipe.RecipeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.commons.lang3.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -45,7 +46,7 @@ public class RecipeController {
     @PutMapping
     public RecipeDto updateRecipe(@RequestBody UpdateRecipeRequest updateRecipeRequest) {
         LOG.info("Updating recipe with recipeId {}", updateRecipeRequest.getRecipeId());
-        return null; //TODO implement
+        throw new NotImplementedException(); //TODO implement
     }
 
     @PostMapping
@@ -57,7 +58,7 @@ public class RecipeController {
     @DeleteMapping(path = "/{recipeId}")
     public void deleteRecipe(@PathVariable("recipeId") UUID recipeId) {
         LOG.info("Deleting recipe with recipeId {}", recipeId);
-        //TODO implement
+        throw new NotImplementedException(); //TODO implement
     }
 
     private Recipe mapToRecipe(CreateRecipeRequest createRecipeRequest) {

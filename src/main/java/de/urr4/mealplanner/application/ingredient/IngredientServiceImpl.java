@@ -6,6 +6,8 @@ import de.urr4.mealplanner.domain.ingredient.IngredientService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class IngredientServiceImpl implements IngredientService {
 
@@ -18,6 +20,11 @@ public class IngredientServiceImpl implements IngredientService {
     @Override
     public Page<Ingredient> getIngredientsPage(int pageNumber, int pageSize) {
         return ingredientRepository.loadIngredientsPage(pageNumber, pageSize);
+    }
+
+    @Override
+    public Ingredient getIngredientById(UUID ingredientId) {
+        return ingredientRepository.getIngredientById(ingredientId);
     }
 
     @Override

@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class Neo4jIngredientRepositoryImpl implements IngredientRepository {
 
@@ -25,6 +27,11 @@ public class Neo4jIngredientRepositoryImpl implements IngredientRepository {
     public Ingredient saveIngredient(Ingredient ingredient) {
         IngredientEntity ingredientEntity = springDataNeo4jIngredientRepository.save(IngredientMapper.getInstance().toEntity(ingredient));
         return IngredientMapper.getInstance().toDomain(ingredientEntity);
+    }
+
+    @Override
+    public Ingredient getIngredientById(UUID ingredientId) {
+        return IngredientMapper.getInstance().toDomain(springDataNeo4jIngredientRepository.findById(ingredientId).orElseThrow(() -> new IllegalArgumentException(String.format("Could not find ingredient with id %s", ingredientId))));
     }
 
 }

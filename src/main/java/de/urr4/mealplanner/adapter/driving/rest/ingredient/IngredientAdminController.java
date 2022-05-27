@@ -1,5 +1,6 @@
 package de.urr4.mealplanner.adapter.driving.rest.ingredient;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,13 +17,13 @@ public class IngredientAdminController {
     @PutMapping
     public IngredientDto updateIngredient(@RequestBody UpdateIngredientRequest updateIngredientRequest) {
         LOG.info("Updating ingredient with ingredientId {}", updateIngredientRequest.getIngredientId());
-        return new IngredientDto(); //TODO implement
+        throw new NotImplementedException(); //TODO implement
     }
 
     @PutMapping(path = "/join")
     public void joinIngredient(@RequestBody JoinIngredientRequest joinIngredientRequest) {
         LOG.info("Joining ingredients {} and {}", joinIngredientRequest.getOriginalIngredientId(), joinIngredientRequest.getRedundantIngredientId());
-        //TODO implement
+        throw new NotImplementedException(); //TODO implement
     }
 
 }
