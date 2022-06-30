@@ -27,19 +27,19 @@ public class IngredientUserController {
     @GetMapping
     public Page<IngredientDto> getIngredientsByPage(@RequestParam(value = "page", defaultValue = "0") int pageNumber, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         LOG.info("Getting recipes for page {} with pageSize {}", pageNumber, pageSize);
-        return ingredientService.getIngredientsPage(pageNumber, pageSize).map(IngredientMapper::toDto);
+        return ingredientService.getIngredientsPage(pageNumber, pageSize).map(IngredientMapper.getInstance()::toDto);
     }
 
     @GetMapping(path = "/{ingredientId}")
     public IngredientDto getIngredient(@PathVariable("ingredientId") UUID ingredientId) {
         LOG.info("Getting ingredient with ingredientId {}", ingredientId);
-        return IngredientMapper.toDto(ingredientService.getIngredientById(ingredientId));
+        return IngredientMapper.getInstance().toDto(ingredientService.getIngredientById(ingredientId));
     }
 
     @PostMapping
     public IngredientDto createIngredient(@RequestBody CreateIngredientRequest createIngredientRequest) {
         LOG.info("Creating ingredient with name {}", createIngredientRequest.getName());
-        return IngredientMapper.toDto(ingredientService.saveIngredient(mapToIngredient(createIngredientRequest)));
+        return IngredientMapper.getInstance().toDto(ingredientService.saveIngredient(mapToIngredient(createIngredientRequest)));
     }
 
     @PutMapping
@@ -52,7 +52,7 @@ public class IngredientUserController {
     private Ingredient mapToIngredient(CreateIngredientRequest createIngredientRequest) {
         Ingredient ingredient = new Ingredient();
         ingredient.setName(createIngredientRequest.getName());
-        ingredient.setTags(createIngredientRequest.getTagDtos().stream().map(TagMapper::toDomain).collect(Collectors.toList()));
+        ingredient.setTags(createIngredientRequest.getTagDtos().stream().map(TagMapper.getInstance()::toDomain).collect(Collectors.toList()));
         return ingredient;
     }
 

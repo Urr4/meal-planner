@@ -14,7 +14,7 @@ public class Recipe {
     private String name;
     private String instructions;
 
-    private Collection<Tag> tags;
     private Collection<IngredientDescriptor> ingredientDescriptors = new ArrayList<>();
+    private Collection<Tag> tags;
 
 }

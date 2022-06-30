@@ -1,20 +1,20 @@
 package de.urr4.mealplanner.adapter.driving.neo4j.tag;
 
-import de.urr4.mealplanner.adapter.driving.neo4j.Mapper;
+import de.urr4.mealplanner.adapter.driving.neo4j.DomainToEntityMapper;
 import de.urr4.mealplanner.domain.tag.Tag;
 
-public class TagMapper implements Mapper<Tag, TagEntity> {
+public class TagDomainToEntityMapper implements DomainToEntityMapper<Tag, TagEntity> {
 
-    private static TagMapper instance;
+    private static TagDomainToEntityMapper instance;
 
-    public static TagMapper getInstance() {
+    public static TagDomainToEntityMapper getInstance() {
         if (instance == null) {
-            instance = new TagMapper();
+            instance = new TagDomainToEntityMapper();
         }
         return instance;
     }
 
-    private TagMapper() {
+    private TagDomainToEntityMapper() {
     }
 
     @Override

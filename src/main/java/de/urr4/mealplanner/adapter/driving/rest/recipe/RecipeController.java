@@ -34,13 +34,13 @@ public class RecipeController {
     @GetMapping
     public Page<RecipeDto> getRecipesByPage(@RequestParam(value = "page", defaultValue = "0") int pageNumber, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         LOG.info("Getting recipes for page {} with pageSize {}", pageNumber, pageSize);
-        return recipeService.getRecipesByPage(PageRequest.of(pageNumber, pageSize)).map(RecipeMapper::toDto);
+        return recipeService.getRecipesByPage(PageRequest.of(pageNumber, pageSize)).map(RecipeMapper.getInstance()::toDto);
     }
 
     @GetMapping(path = "/{recipeId}")
     public RecipeDto getRecipe(@PathVariable("recipeId") UUID recipeId) {
         LOG.info("Getting recipe with recipeId {}", recipeId);
-        return RecipeMapper.toDto(recipeService.getRecipeById(recipeId));
+        return RecipeMapper.getInstance().toDto(recipeService.getRecipeById(recipeId));
     }
 
     @PutMapping
@@ -52,7 +52,7 @@ public class RecipeController {
     @PostMapping
     public RecipeDto createRecipe(@RequestBody CreateRecipeRequest createRecipeRequest) {
         LOG.info("Creating recipe");
-        return RecipeMapper.toDto(recipeService.createRecipe(mapToRecipe(createRecipeRequest)));
+        return RecipeMapper.getInstance().toDto(recipeService.createRecipe(mapToRecipe(createRecipeRequest)));
     }
 
     @DeleteMapping(path = "/{recipeId}")
@@ -66,13 +66,13 @@ public class RecipeController {
         recipe.setName(createRecipeRequest.getName());
         recipe.setInstructions(createRecipeRequest.getInstructions());
         recipe.setIngredientDescriptors(createRecipeRequest.getIngredientDescriptors().stream().map(this::mapToIngredientDescriptor).collect(Collectors.toList()));
-        recipe.setTags(createRecipeRequest.getTags().stream().map(TagMapper::toDomain).collect(Collectors.toList()));
+        recipe.setTags(createRecipeRequest.getTags().stream().map(TagMapper.getInstance()::toDomain).collect(Collectors.toList()));
         return recipe;
     }
 
     private IngredientDescriptor mapToIngredientDescriptor(CreateIngredientDescriptorRequest ingredientDescriptorRequest) {
         IngredientDescriptor ingredientDescriptor = new IngredientDescriptor();
-        ingredientDescriptor.setIngredient(IngredientMapper.toDomain(ingredientDescriptorRequest.getIngredient()));
+        ingredientDescriptor.setIngredient(IngredientMapper.getInstance().toDomain(ingredientDescriptorRequest.getIngredient()));
         return ingredientDescriptor;
     }
 

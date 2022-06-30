@@ -1,20 +1,20 @@
 package de.urr4.mealplanner.adapter.driving.neo4j.ingredient;
 
-import de.urr4.mealplanner.adapter.driving.neo4j.Mapper;
+import de.urr4.mealplanner.adapter.driving.neo4j.DomainToEntityMapper;
 import de.urr4.mealplanner.domain.ingredient.Ingredient;
 
-public class IngredientMapper implements Mapper<Ingredient, IngredientEntity> {
+public class IngredientDomainToEntityMapper implements DomainToEntityMapper<Ingredient, IngredientEntity> {
 
-    private static IngredientMapper instance;
+    private static IngredientDomainToEntityMapper instance;
 
-    public static IngredientMapper getInstance() {
+    public static IngredientDomainToEntityMapper getInstance() {
         if (instance == null) {
-            instance = new IngredientMapper();
+            instance = new IngredientDomainToEntityMapper();
         }
         return instance;
     }
 
-    private IngredientMapper() {
+    private IngredientDomainToEntityMapper() {
     }
 
     public IngredientEntity toEntity(Ingredient domain) {

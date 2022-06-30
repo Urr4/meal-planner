@@ -24,19 +24,19 @@ public class TagController {
     @GetMapping
     public Collection<TagDto> getAllTags() {
         LOG.info("Getting all tags");
-        return tagService.getAllTags().stream().map(TagMapper::toDto).collect(Collectors.toList());
+        return tagService.getAllTags().stream().map(TagMapper.getInstance()::toDto).collect(Collectors.toList());
     }
 
     @GetMapping(path = "/{tagId}")
     public TagDto getTagById(@PathVariable("tagId") UUID tagId) {
         LOG.info("Getting tag {}", tagId);
-        return TagMapper.toDto(tagService.getTagById(tagId));
+        return TagMapper.getInstance().toDto(tagService.getTagById(tagId));
     }
 
     @PostMapping
     public TagDto createTag(@RequestBody CreateTagRequest createTagRequest) {
         LOG.info("Creating tag with name {}", createTagRequest.getName());
-        return TagMapper.toDto(tagService.createTag(createTagRequest.getName()));
+        return TagMapper.getInstance().toDto(tagService.createTag(createTagRequest.getName()));
     }
 
 }

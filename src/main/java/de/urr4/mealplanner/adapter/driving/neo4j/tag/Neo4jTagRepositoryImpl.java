@@ -19,16 +19,16 @@ public class Neo4jTagRepositoryImpl implements TagRepository {
 
     @Override
     public Tag createTag(Tag tag) {
-        return TagMapper.getInstance().toDomain(tagRepository.save(TagMapper.getInstance().toEntity(tag)));
+        return TagDomainToEntityMapper.getInstance().toDomain(tagRepository.save(TagDomainToEntityMapper.getInstance().toEntity(tag)));
     }
 
     @Override
     public Collection<Tag> getAllTags() {
-        return tagRepository.findAll().stream().map(TagMapper.getInstance()::toDomain).collect(Collectors.toList());
+        return tagRepository.findAll().stream().map(TagDomainToEntityMapper.getInstance()::toDomain).collect(Collectors.toList());
     }
 
     @Override
     public Tag getTagById(UUID tagId) {
-        return TagMapper.getInstance().toDomain(tagRepository.findById(tagId).orElseThrow(() -> new IllegalArgumentException(String.format("Could not find tag with id %s", tagId))));
+        return TagDomainToEntityMapper.getInstance().toDomain(tagRepository.findById(tagId).orElseThrow(() -> new IllegalArgumentException(String.format("Could not find tag with id %s", tagId))));
     }
 }

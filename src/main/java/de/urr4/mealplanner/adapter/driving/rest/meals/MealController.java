@@ -12,6 +12,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "/meals")
 public class MealController {
 
@@ -24,21 +25,21 @@ public class MealController {
     }
 
     @GetMapping
-    public Collection<MealDto> getRandomMeals(@RequestParam(value = "numberOfMeals", defaultValue = "0") int numberOfMeals) {
+    public Collection<MealDto> getRandomMeals(@RequestParam(value = "numberOfMeals", defaultValue = "5") int numberOfMeals) {
         LOG.info("Getting random meal-plan with {} meals", numberOfMeals);
-        return mealService.getRandomMeals(numberOfMeals).stream().map(MealMapper::toDto).collect(Collectors.toList());
+        return mealService.getRandomMeals(numberOfMeals).stream().map(MealMapper.getInstance()::toDto).collect(Collectors.toList());
     }
 
     @GetMapping(path = "/{mealId}")
     public MealDto getMeal(@PathVariable("mealId") UUID mealId) {
         LOG.info("Getting meal {}", mealId);
-        return MealMapper.toDto(mealService.getMealById(mealId));
+        return MealMapper.getInstance().toDto(mealService.getMealById(mealId));
     }
 
     @PostMapping
     public MealDto createMeal(@RequestBody CreateMealRequest createMealRequest) {
         LOG.info("Creating meal for mealId {}", createMealRequest.getMealName());
-        return MealMapper.toDto(mealService.createMeal(mapToMeal(createMealRequest)));
+        return MealMapper.getInstance().toDto(mealService.createMeal(mapToMeal(createMealRequest)));
     }
 
     @PutMapping

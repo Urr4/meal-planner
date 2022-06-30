@@ -21,17 +21,17 @@ public class Neo4jRecipeRepositoryImpl implements RecipeRepository {
 
     @Override
     public Page<Recipe> getRecipesByPage(Pageable pageable) {
-        return springDataNeo4JRecipeRepository.findAll(pageable).map(RecipeMapper.getInstance()::toDomain);
+        return springDataNeo4JRecipeRepository.findAll(pageable).map(RecipeDomainToEntityMapper.getInstance()::toDomain);
     }
 
     @Override
     public Recipe createRecipe(Recipe recipe) {
-        return RecipeMapper.getInstance().toDomain(springDataNeo4JRecipeRepository.save(RecipeMapper.getInstance().toEntity(recipe)));
+        return RecipeDomainToEntityMapper.getInstance().toDomain(springDataNeo4JRecipeRepository.save(RecipeDomainToEntityMapper.getInstance().toEntity(recipe)));
     }
 
     @Override
     public Recipe getRecipeById(UUID id) {
         Optional<RecipeEntity> optional = springDataNeo4JRecipeRepository.findById(id);
-        return RecipeMapper.getInstance().toDomain(optional.orElseThrow(() -> new NotFoundException(String.format("Could not find Recipe %s", id))));
+        return RecipeDomainToEntityMapper.getInstance().toDomain(optional.orElseThrow(() -> new NotFoundException(String.format("Could not find Recipe %s", id))));
     }
 }

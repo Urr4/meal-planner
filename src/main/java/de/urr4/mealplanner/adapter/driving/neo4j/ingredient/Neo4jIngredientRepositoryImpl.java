@@ -20,18 +20,18 @@ public class Neo4jIngredientRepositoryImpl implements IngredientRepository {
     @Override
     public Page<Ingredient> loadIngredientsPage(int pageNumber, int pageSize) {
         return springDataNeo4jIngredientRepository.findAll(PageRequest.of(pageNumber, pageSize))
-                .map(IngredientMapper.getInstance()::toDomain);
+                .map(IngredientDomainToEntityMapper.getInstance()::toDomain);
     }
 
     @Override
     public Ingredient saveIngredient(Ingredient ingredient) {
-        IngredientEntity ingredientEntity = springDataNeo4jIngredientRepository.save(IngredientMapper.getInstance().toEntity(ingredient));
-        return IngredientMapper.getInstance().toDomain(ingredientEntity);
+        IngredientEntity ingredientEntity = springDataNeo4jIngredientRepository.save(IngredientDomainToEntityMapper.getInstance().toEntity(ingredient));
+        return IngredientDomainToEntityMapper.getInstance().toDomain(ingredientEntity);
     }
 
     @Override
     public Ingredient getIngredientById(UUID ingredientId) {
-        return IngredientMapper.getInstance().toDomain(springDataNeo4jIngredientRepository.findById(ingredientId).orElseThrow(() -> new IllegalArgumentException(String.format("Could not find ingredient with id %s", ingredientId))));
+        return IngredientDomainToEntityMapper.getInstance().toDomain(springDataNeo4jIngredientRepository.findById(ingredientId).orElseThrow(() -> new IllegalArgumentException(String.format("Could not find ingredient with id %s", ingredientId))));
     }
 
 }

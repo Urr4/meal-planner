@@ -8,14 +8,14 @@ public class IngredientDescriptorMapper {
     public static IngredientDescriptorDto toDto(IngredientDescriptor ingredientDescriptor) {
         IngredientDescriptorDto ingredientDescriptorDto = new IngredientDescriptorDto();
         ingredientDescriptorDto.setId(ingredientDescriptor.getId());
-        ingredientDescriptorDto.setIngredient(IngredientMapper.toDto(ingredientDescriptor.getIngredient()));
+        ingredientDescriptorDto.setIngredient(IngredientMapper.getInstance().toDto(ingredientDescriptor.getIngredient()));
         return ingredientDescriptorDto;
     }
 
     public static IngredientDescriptor toDomain(IngredientDescriptorDto ingredientDescriptorDto) {
         IngredientDescriptor ingredientDescriptor = new IngredientDescriptor();
         ingredientDescriptor.setId(ingredientDescriptorDto.getId());
-        ingredientDescriptor.setIngredient(IngredientMapper.toDomain(ingredientDescriptorDto.getIngredient()));
+        ingredientDescriptor.setIngredient(IngredientMapper.getInstance().toDomain(ingredientDescriptorDto.getIngredient()));
         return ingredientDescriptor;
     }
 }
