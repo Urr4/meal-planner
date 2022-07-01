@@ -12,6 +12,7 @@ public class Recipe {
 
     private UUID id;
     private String name;
+    private RecipeType recipeType;
     private String instructions;
 
     private Collection<IngredientDescriptor> ingredientDescriptors = new ArrayList<>();

@@ -29,10 +29,10 @@ public class MealDomainToEntityMapper implements DomainToEntityMapper<Meal, Meal
     }
 
     public Meal toDomain(MealEntity mealEntity) {
-        Meal meal = new Meal();
-        meal.setId(mealEntity.getId());
-        meal.setName(mealEntity.getName());
-        meal.setRecipes(mealEntity.getRecipeEntitys().stream().map(RecipeDomainToEntityMapper.getInstance()::toDomain).collect(Collectors.toList()));
-        return meal;
+        return Meal.builder()
+                .id(mealEntity.getId())
+                .name(mealEntity.getName())
+                .recipes(mealEntity.getRecipeEntitys().stream().map(RecipeDomainToEntityMapper.getInstance()::toDomain).collect(Collectors.toList()))
+                .build();
     }
 }

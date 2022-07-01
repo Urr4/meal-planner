@@ -24,6 +24,7 @@ public class RecipeMapper implements DomainToDtoMapper<RecipeDto, Recipe> {
         RecipeDto recipeDto = new RecipeDto();
         recipeDto.setId(recipe.getId());
         recipeDto.setName(recipe.getName());
+        recipeDto.setRecipeType(recipe.getRecipeType());
         recipeDto.setInstructions(recipe.getInstructions());
         recipeDto.setIngredientDescriptors(recipe.getIngredientDescriptors().stream().map(IngredientDescriptorMapper::toDto).collect(Collectors.toList()));
         recipeDto.setTags(recipe.getTags().stream().map(TagMapper.getInstance()::toDto).collect(Collectors.toList()));
@@ -34,6 +35,7 @@ public class RecipeMapper implements DomainToDtoMapper<RecipeDto, Recipe> {
         Recipe recipe = new Recipe();
         recipe.setId(recipeDto.getId());
         recipe.setName(recipeDto.getName());
+        recipe.setRecipeType(recipeDto.getRecipeType());
         recipe.setInstructions(recipeDto.getInstructions());
         recipe.setIngredientDescriptors(recipeDto.getIngredientDescriptors().stream().map(IngredientDescriptorMapper::toDomain).collect(Collectors.toList()));
         recipe.setTags(recipeDto.getTags().stream().map(TagMapper.getInstance()::toDomain).collect(Collectors.toList()));

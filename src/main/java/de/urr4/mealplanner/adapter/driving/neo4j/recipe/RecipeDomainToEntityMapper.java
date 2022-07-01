@@ -24,6 +24,7 @@ public class RecipeDomainToEntityMapper implements DomainToEntityMapper<Recipe, 
         RecipeEntity recipeEntity = new RecipeEntity();
         recipeEntity.setId(domain.getId());
         recipeEntity.setName(domain.getName());
+        recipeEntity.setRecipeType(domain.getRecipeType());
         recipeEntity.setInstructions(domain.getInstructions());
         recipeEntity.setIngredientDescriptors(domain.getIngredientDescriptors().stream().map(IngredientDescriptorDomainToEntityMapper.getInstance()::toEntity).collect(Collectors.toList()));
         recipeEntity.setTags(domain.getTags().stream().map(TagDomainToEntityMapper.getInstance()::toEntity).collect(Collectors.toList()));
@@ -34,6 +35,7 @@ public class RecipeDomainToEntityMapper implements DomainToEntityMapper<Recipe, 
         Recipe recipe = new Recipe();
         recipe.setId(recipeEntity.getId());
         recipe.setName(recipeEntity.getName());
+        recipe.setRecipeType(recipeEntity.getRecipeType());
         recipe.setInstructions(recipeEntity.getInstructions());
         recipe.setIngredientDescriptors(recipeEntity.getIngredientDescriptors().stream().map(IngredientDescriptorDomainToEntityMapper.getInstance()::toDomain).collect(Collectors.toList()));
         recipe.setTags(recipeEntity.getTags().stream().map(TagDomainToEntityMapper.getInstance()::toDomain).collect(Collectors.toList()));

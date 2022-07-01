@@ -29,10 +29,10 @@ public class MealMapper implements DomainToDtoMapper<MealDto, Meal> {
     }
 
     public Meal toDomain(MealDto dto) {
-        Meal meal = new Meal();
-        meal.setId(dto.getId());
-        meal.setName(dto.getName());
-        meal.setRecipes(dto.getRecipes().stream().map(RecipeMapper.getInstance()::toDomain).collect(Collectors.toList()));
-        return meal;
+        return Meal.builder()
+                .id(dto.getId())
+                .name(dto.getName())
+                .recipes(dto.getRecipes().stream().map(RecipeMapper.getInstance()::toDomain).collect(Collectors.toList()))
+                .build();
     }
 }

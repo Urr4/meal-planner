@@ -1,6 +1,7 @@
 package de.urr4.mealplanner.adapter.driving.neo4j.recipe;
 
 import de.urr4.mealplanner.adapter.driving.neo4j.tag.TagEntity;
+import de.urr4.mealplanner.domain.recipe.RecipeType;
 import de.urr4.mealplanner.domain.tag.Tag;
 import lombok.Data;
 import org.springframework.data.neo4j.core.schema.*;
@@ -18,6 +19,9 @@ public class RecipeEntity {
 
     @Property
     private String name;
+
+    @Property
+    private RecipeType recipeType;
 
     @Relationship(type = "CONTAINS")
     private Collection<IngredientDescriptionRelationshipEntity> ingredientDescriptors;

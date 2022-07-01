@@ -25,9 +25,9 @@ public class MealController {
     }
 
     @GetMapping
-    public Collection<MealDto> getRandomMeals(@RequestParam(value = "numberOfMeals", defaultValue = "5") int numberOfMeals) {
-        LOG.info("Getting random meal-plan with {} meals", numberOfMeals);
-        return mealService.getRandomMeals(numberOfMeals).stream().map(MealMapper.getInstance()::toDto).collect(Collectors.toList());
+    public Collection<MealDto> getRandomMeals(@RequestParam(value = "numFav", defaultValue = "3") int numberOfFavoriteMeals, @RequestParam(value = "numGen", defaultValue = "2") int numberOfGeneratedMeals) {
+        LOG.info("Getting random meal-plan with {} meals", numberOfFavoriteMeals);
+        return mealService.getRandomMeals(numberOfFavoriteMeals, numberOfGeneratedMeals).stream().map(MealMapper.getInstance()::toDto).collect(Collectors.toList());
     }
 
     @GetMapping(path = "/{mealId}")
@@ -55,8 +55,8 @@ public class MealController {
     }
 
     private Meal mapToMeal(CreateMealRequest createMealRequest) {
-        Meal meal = new Meal();
-        meal.setName(createMealRequest.getMealName());
-        return meal;
+        return Meal.builder()
+                .name(createMealRequest.getMealName())
+                .build();
     }
 }
