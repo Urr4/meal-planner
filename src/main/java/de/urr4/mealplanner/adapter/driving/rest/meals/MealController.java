@@ -26,7 +26,7 @@ public class MealController {
 
     @GetMapping
     public Collection<MealDto> getRandomMeals(@RequestParam(value = "numFav", defaultValue = "3") int numberOfFavoriteMeals, @RequestParam(value = "numGen", defaultValue = "2") int numberOfGeneratedMeals) {
-        LOG.info("Getting random meal-plan with {} meals", numberOfFavoriteMeals);
+        LOG.info("Getting random meal-plan with {} favorite and {} generated meals", numberOfFavoriteMeals, numberOfGeneratedMeals);
         return mealService.getRandomMeals(numberOfFavoriteMeals, numberOfGeneratedMeals).stream().map(MealMapper.getInstance()::toDto).collect(Collectors.toList());
     }
 

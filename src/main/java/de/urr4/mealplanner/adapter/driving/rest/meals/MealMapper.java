@@ -23,6 +23,7 @@ public class MealMapper implements DomainToDtoMapper<MealDto, Meal> {
     public MealDto toDto(Meal meal) {
         MealDto dto = new MealDto();
         dto.setId(meal.getId());
+        dto.setGenerated(meal.getId() == null);
         dto.setName(meal.getName());
         dto.setRecipes(meal.getRecipes().stream().map(RecipeMapper.getInstance()::toDto).collect(Collectors.toList()));
         return dto;
