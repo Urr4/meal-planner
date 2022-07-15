@@ -17,4 +17,6 @@ public interface RecipeRepository {
     Recipe createRecipe(Recipe recipe);
 
     Recipe getRecipeById(UUID id);
+
+    Collection<Recipe> getRecipesById(Collection<UUID> ids);
 }

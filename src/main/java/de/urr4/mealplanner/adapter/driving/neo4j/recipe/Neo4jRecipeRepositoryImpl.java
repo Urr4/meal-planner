@@ -42,4 +42,9 @@ public class Neo4jRecipeRepositoryImpl implements RecipeRepository {
         Optional<RecipeEntity> optional = springDataNeo4JRecipeRepository.findById(id);
         return RecipeDomainToEntityMapper.getInstance().toDomain(optional.orElseThrow(() -> new NotFoundException(String.format("Could not find Recipe %s", id))));
     }
+
+    @Override
+    public Collection<Recipe> getRecipesById(Collection<UUID> ids) {
+        return springDataNeo4JRecipeRepository.findAllById(ids).stream().map(RecipeDomainToEntityMapper.getInstance()::toDomain).collect(Collectors.toList());
+    }
 }

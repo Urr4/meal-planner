@@ -1,10 +1,14 @@
 package de.urr4.mealplanner.adapter.driving.rest.meals;
 
+import de.urr4.mealplanner.adapter.driving.rest.recipe.RecipeMapper;
 import de.urr4.mealplanner.domain.meal.Meal;
 import de.urr4.mealplanner.domain.meal.MealService;
+import de.urr4.mealplanner.domain.recipe.Recipe;
+import de.urr4.mealplanner.domain.recipe.RecipeService;
 import org.apache.commons.lang3.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -19,9 +23,11 @@ public class MealController {
     private final Logger LOG = LoggerFactory.getLogger(MealController.class);
 
     private final MealService mealService;
+    private final RecipeService recipeService;
 
-    public MealController(MealService mealService) {
+    public MealController(MealService mealService, RecipeService recipeService) {
         this.mealService = mealService;
+        this.recipeService = recipeService;
     }
 
     @GetMapping
@@ -37,15 +43,15 @@ public class MealController {
     }
 
     @PostMapping
+    @Transactional
     public MealDto createMeal(@RequestBody CreateMealRequest createMealRequest) {
-        LOG.info("Creating meal for mealId {}", createMealRequest.getMealName());
-        return MealMapper.getInstance().toDto(mealService.createMeal(mapToMeal(createMealRequest)));
-    }
-
-    @PutMapping
-    public void favoriteMeal(@RequestBody FavoriteMealRequest favoriteMealRequest) {
-        LOG.info("User {} favorited meal with mealId {}", favoriteMealRequest.getUserId(), favoriteMealRequest.getMealId());
-        throw new NotImplementedException(); //TODO implement
+        LOG.info("Creating meal with name {} and {} recipes", createMealRequest.getMealName(), createMealRequest.getRecipeIds().size());
+        Collection<Recipe> recipes = recipeService.getRecipesByIds(createMealRequest.getRecipeIds());
+        Meal meal = Meal.builder()
+                .name(createMealRequest.getMealName())
+                .recipes(recipes)
+                .build();
+        return MealMapper.getInstance().toDto(mealService.createMeal(meal));
     }
 
     @DeleteMapping(path = "/{mealId}")
@@ -54,9 +60,4 @@ public class MealController {
         throw new NotImplementedException(); //TODO implement
     }
 
-    private Meal mapToMeal(CreateMealRequest createMealRequest) {
-        return Meal.builder()
-                .name(createMealRequest.getMealName())
-                .build();
-    }
 }

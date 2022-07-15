@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.UUID;
 
 @Service
@@ -30,5 +31,10 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public Recipe getRecipeById(UUID id) {
         return recipeRepository.getRecipeById(id);
+    }
+
+    @Override
+    public Collection<Recipe> getRecipesByIds(Collection<UUID> ids) {
+        return recipeRepository.getRecipesById(ids);
     }
 }
